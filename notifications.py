@@ -11,18 +11,15 @@ from requests.exceptions import HTTPError
 # want to use, or simply pass in a `PushMessage` object.
 def send_push_message(token, message, extra=None):
     try:
-        response = PushClient().publish(
-            PushMessage(to=token,
-                        body=message,
-                        data=extra))
+        response = PushClient().publish(PushMessage(to=token, body=message, data=extra))
     except PushServerError as exc:
         # Encountered some likely formatting/validation error.
-        print('pushservererror', exc)
+        print("pushservererror", exc)
         raise
     except (ConnectionError, HTTPError) as exc:
         # Encountered some Connection or HTTP error - retry a few times in
         # case it is transient.
-        print('connection error ', exc)
+        print("connection error ", exc)
         raise
 
     try:
@@ -32,5 +29,5 @@ def send_push_message(token, message, extra=None):
         response.validate_response()
     except PushResponseError as exc:
         # Encountered some other per-notification error.
-        print('pushresponse failed > ', exc)
+        print("pushresponse failed > ", exc)
         raise
