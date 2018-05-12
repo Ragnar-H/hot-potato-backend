@@ -5,4 +5,10 @@ repos:
     - id: black
       args: [--line-length=88, --safe]
       python_version: python3.6
-
+-   repo: local
+    hooks:
+    -   id: pylint
+        name: pylint
+        entry: python -m pylint.__main__
+        language: system
+        types: [python]
