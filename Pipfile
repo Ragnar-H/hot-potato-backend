@@ -11,9 +11,9 @@ requests = "*"
 firebase-admin = "*"
 
 [dev-packages]
-black = "*"
 pre-commit = "*"
 pylint = "*"
+black = "==18.4a4"
 
 [requires]
 python_version = "3.6"
