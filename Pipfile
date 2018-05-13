@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
-redis = "*"
 six = "*"
 exponent-server-sdk = "*"
 requests = "*"
+firebase-admin = "*"
 
 [dev-packages]
 black = "*"
