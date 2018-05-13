@@ -68,7 +68,7 @@ def _ensure_potato(potato_id):
 def _get_first_potato():
     potato = POTATO.order_by_key().limit_to_first(1).get()
     if not potato:
-        return _create_potato()
+        return (_create_potato(), None)
     potato_id = list(potato.keys())[0]
     peeled_potato = potato[potato_id]
     return peeled_potato, potato_id
@@ -83,16 +83,22 @@ def _create_potato():
     return potato
 
 
-def _get_random_user():
+def _get_random_user(exclude_user_id=None):
     users = USERS.get()
-    random_user_id = random.choice(list(users))
+    user_ids = list(users)
+    if exclude_user_id:
+        user_ids.remove(exclude_user_id)
+    random_user_id = random.choice(user_ids)
     user = users[random_user_id]
     user["user_id"] = random_user_id
     return user
 
 
 def _new_holder(potato):
-    catcher = _get_random_user()
+    if "holder" in potato:
+        catcher = _get_random_user(potato["holder"]["id"])
+    else:
+        catcher = _get_random_user()
     potato["holder"] = {"id": catcher["user_id"], "username": catcher["username"]}
     return potato
 
